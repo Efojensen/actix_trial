@@ -1,18 +1,24 @@
-mod models;
 mod handlers;
+mod models;
+mod state;
 
-use handlers::{general, cars};
+use handlers::{cars, general};
 
 use actix_web::{App, HttpServer, web};
 
+use crate::state::AppState;
+
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    HttpServer::new(|| App::new()
-        .service(general::hello)
-        .service(general::about)
-        .service(cars::list_cars)
-        .route("/health", web::get().to(general::health))
-    )
+    HttpServer::new(|| {
+        let state = web::Data::new(AppState::new());
+        App::new()
+            .app_data(state)
+            .service(general::hello)
+            .service(general::about)
+            .service(cars::list_cars)
+            .route("/health", web::get().to(general::health))
+    })
     .bind(("localhost", 8080))?
     .run()
     .await
