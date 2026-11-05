@@ -1,4 +1,4 @@
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 
 #[derive(Serialize, Clone)]
 pub struct Car {
@@ -8,3 +8,7 @@ pub struct Car {
     pub is_luxury: bool
 }
 
+#[derive(Deserialize)]
+pub struct BrandFilter {
+    pub brand: Option<String>
+}

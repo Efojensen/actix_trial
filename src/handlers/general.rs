@@ -13,3 +13,4 @@ pub async fn about() -> impl Responder {
 pub async fn health() -> impl Responder {
     "The api is running"
 }
+

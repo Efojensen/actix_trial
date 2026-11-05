@@ -17,6 +17,7 @@ async fn main() -> std::io::Result<()> {
             .service(general::hello)
             .service(general::about)
             .service(cars::list_cars)
+            .service(cars::get_reg_num)
             .route("/health", web::get().to(general::health))
     })
     .bind(("localhost", 8080))?
